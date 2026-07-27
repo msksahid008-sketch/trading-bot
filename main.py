@@ -6,16 +6,14 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN") 
 
-# Binance exchange initialize kar rahe hain (Free public data ke liye)
 exchange = ccxt.binance()
 
 @app.route("/")
 def home():
     return "Trading Bot with Direct API is live!"
 
-# Telegram se messages receive karne ke liye webhook route
 @app.route(f"/{TELEGRAM_BOT_TOKEN}", methods=["POST"])
 def webhook():
     update = request.get_json()
@@ -26,7 +24,7 @@ def webhook():
         if text == "/start":
             send_message(chat_id, "Hello! Bot is active. Type /price to check current Bitcoin price.")
         elif text == "/price":
-            # Direct exchange se live price fetch karna
+            
             try:
                 ticker = exchange.fetch_ticker('BTC/USDT')
                 price = ticker['last']
