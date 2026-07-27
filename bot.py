@@ -22,6 +22,18 @@ def webhook():
     data = request.json
     if not data:
         return "No data", 400
+    
+    # Signal ka data nikalna
+    asset = data.get("asset", "Unknown Asset")
+    action = data.get("action", "Unknown Action")
+    price = data.get("price", "Unknown Price")
+    
+    # Telegram ke liye message format karna
+    message = f"🚨 *New Trading Signal* 🚨\n\n*Asset:* {asset}\n*Action:* {action}\n*Price:* {price}"
+    
+    # Message bhejna
+    send_telegram_message(message)
+    
     return "OK", 200
 
 if __name__ == "__main__":
