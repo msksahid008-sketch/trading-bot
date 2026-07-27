@@ -26,33 +26,16 @@ def send_telegram_message(message):
 
 # Free market data checker background task
 def market_scanner():
-    time.sleep(5) # Bot start hone ke thodi der baad chalega
-    send_telegram_message("🤖 *Free Trading Bot Active!*\n\nMonitoring BTC and XAUUSD live from public data. No TradingView required!")
-    
     while True:
-        try:
-            # BTC live price fetch kar rahe hain Binance se (Free)
-            btc_response = requests.get("https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT", timeout=10)
-            btc_price = float(btc_response.json()['price'])
-            
-            # Yahan aapki strategy / conditions check hongi aur signal aane par Telegram par message jayega
-            # Filhal yeh check kar raha hai ki bot live data le raha hai
-            print(f"Fetched live BTC Price: {btc_price}")
-            
-        except Exception as e:
-            print(f"Error fetching market data: {e}")
-            
-        # Har 5 minute mein market check karega
-        time.sleep(300)
+        # Yahan aap apna trading logic daal sakte hain
+        time.sleep(60)
 
 @app.route("/")
 def home():
-    return "Free Trading Bot is running live for BTC and XAUUSD!"
+    return "Trading Bot is active and running!"
 
 if __name__ == "__main__":
-    # Background thread start kar rahe hain taaki server bhi chale aur market bhi scan ho
-    scanner_thread = threading.Thread(target=market_scanner)
-    scanner_thread.daemon = True
-    scanner_thread.start()
-    
-    app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)))
+    # Background thread start karne ke liye
+    threading.Thread(target=market_scanner, daemon=True).start()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
