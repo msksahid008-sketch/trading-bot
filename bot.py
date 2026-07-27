@@ -2,9 +2,7 @@ from flask import Flask, request
 import requests
 import os
 
-app = Flask(name)
-
-Yahan apni asli details daal dein
+app = Flask(__name__)
 GEMINI_API_KEY = "YAHAN_APNI_GEMINI_API_KEY_DAALEIN"
 TELEGRAM_BOT_TOKEN = "YAHAN_APNA_TELEGRAM_TOKEN_DAALEIN"
 TELEGRAM_CHAT_ID = "YAHAN_APNI_CHAT_ID_DAALEIN"
